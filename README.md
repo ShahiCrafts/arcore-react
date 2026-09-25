@@ -1,5 +1,5 @@
 <div align="center">
-# arcore-react
+#arcore-react
 
 ### A developer-friendly AR abstraction for React, Capacitor, WebXR, ARCore and Three.js
 
