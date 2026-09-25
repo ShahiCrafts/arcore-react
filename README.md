@@ -1,7 +1,7 @@
 <div align="center">
-# arcore-react
+<h1>arcore-react</h1>
 
-### A developer-friendly AR abstraction for React, Capacitor, WebXR, ARCore and Three.js
+<h3>A developer-friendly AR abstraction for React, Capacitor, WebXR, ARCore and Three.js</h3>
 
 Build interactive augmented-reality experiences without wiring XR
 sessions, hit testing, model transforms, gesture handling, and rendering
