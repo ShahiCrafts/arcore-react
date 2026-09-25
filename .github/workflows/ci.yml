@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install SDK dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate SDK syntax
+        run: |
+          node --check src/index.js
+          node --check src/web.js
+          node --check src/ar-view.js
+          node --check src/gestures.js
+          node --check src/hooks.js
+      - name: Install example dependencies
+        working-directory: example
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build example
+        working-directory: example
+        run: npm run build

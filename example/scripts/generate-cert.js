@@ -1,0 +1,11 @@
+import os from 'os'; import fs from 'fs'; import {execFileSync} from 'child_process'; import path from 'path';
+const ips=[]; for(const xs of Object.values(os.networkInterfaces())) for(const x of xs||[]) if(x.family==='IPv4'&&!x.internal) ips.push(x.address);
+const ip=ips[0]||'127.0.0.1', dir=path.resolve('certs'); fs.mkdirSync(dir,{recursive:true});
+const ext=`subjectAltName=DNS:localhost,IP:127.0.0.1,IP:${ip}\nextendedKeyUsage=serverAuth\n`;
+fs.writeFileSync(path.join(dir,'server.ext'),ext);
+const run=(a)=>execFileSync('openssl',a,{stdio:'inherit'});
+if(!fs.existsSync(path.join(dir,'dev-ca.key'))) run(['genrsa','-out',path.join(dir,'dev-ca.key'),'2048']);
+if(!fs.existsSync(path.join(dir,'dev-ca.crt'))) run(['req','-x509','-new','-nodes','-key',path.join(dir,'dev-ca.key'),'-sha256','-days','3650','-subj','/CN=AR DOM Lab Development CA','-out',path.join(dir,'dev-ca.crt')]);
+run(['req','-newkey','rsa:2048','-nodes','-keyout',path.join(dir,'server.key'),'-subj',`/CN=${ip}`,'-out',path.join(dir,'server.csr')]);
+run(['x509','-req','-in',path.join(dir,'server.csr'),'-CA',path.join(dir,'dev-ca.crt'),'-CAkey',path.join(dir,'dev-ca.key'),'-CAcreateserial','-out',path.join(dir,'server.crt'),'-days','825','-sha256','-extfile',path.join(dir,'server.ext')]);
+console.log(`\nPhone URL: https://${ip}:5173`); console.log(`Install certs/dev-ca.crt as a CA certificate on the phone, then restart Chrome.`);

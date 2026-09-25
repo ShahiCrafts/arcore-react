@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "com.capacitor.arcore.test"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.capacitor.arcore.test"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    
+    configurations.all {
+        resolutionStrategy {
+            force 'com.google.ar:core:1.40.0'
+            force 'com.google.android.filament:filament-android:1.52.0'
+        }
+    }
+    
+    // Suppress duplicate class warnings from kotlin stdlib conflicts
+    packagingOptions {
+        pickFirst 'kotlin/internal/jdk7/JDK7PlatformImplementations.class'
+        pickFirst 'kotlin/internal/jdk8/JDK8PlatformImplementations.class'
+        pickFirst 'kotlin/io/path/ExperimentalPathApi.class'
+        pickFirst 'kotlin/io/path/PathsKt.class'
+        pickFirst 'kotlin/jdk7/AutoCloseableKt.class'
+        pickFirst 'kotlin/jvm/jdk8/JvmRepeatableKt.class'
+        pickFirst 'kotlin/random/jdk8/PlatformThreadLocalRandom.class'
+        pickFirst 'kotlin/streams/jdk8/StreamsKt.class'
+        pickFirst 'kotlin/text/jdk8/RegexExtensionsJDK8Kt.class'
+        pickFirst 'kotlin/time/jdk8/DurationConversionsJDK8Kt.class'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    implementation project(':capacitor-arcore')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

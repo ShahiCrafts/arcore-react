@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Camera permission for AR -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- AR features -->
+    <uses-feature android:name="android.hardware.camera.ar" android:required="true" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <application>
+        <!-- ARCore metadata - indicates this app requires ARCore -->
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
+    </application>
+</manifest>

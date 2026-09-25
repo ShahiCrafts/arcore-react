@@ -1,0 +1,40 @@
+{
+  "name": "capacitor-arcore",
+  "version": "1.0.0",
+  "description": "High-level AR abstraction for Capacitor and React with WebXR, ARCore, Three.js, gestures, model customization, and DOM overlays.",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "files": [
+    "android/",
+    "src/"
+  ],
+  "author": "ShahiCrafts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShahiCrafts/arcore-react.git"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "arcore",
+    "ar",
+    "augmented-reality",
+    "android",
+    "react",
+    "webxr",
+    "3d",
+    "threejs"
+  ],
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.5.2",
+    "three": "^0.180.0"
+  },
+  "bugs": {
+    "url": "https://github.com/ShahiCrafts/arcore-react/issues"
+  },
+  "homepage": "https://github.com/ShahiCrafts/arcore-react#readme"
+}
