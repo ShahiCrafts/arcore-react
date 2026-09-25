@@ -1,4 +1,4 @@
-::: {align="center"}
+<div align="center">
 # arcore-react
 
 ### A developer-friendly AR abstraction for React, Capacitor, WebXR, ARCore and Three.js
@@ -16,7 +16,7 @@ place · Materials & textures · AR screenshots · React DOM overlays**
 ![WebXR](https://img.shields.io/badge/WebXR-AR-5C2D91)
 ![Android](https://img.shields.io/badge/Android-ARCore-3DDC84?logo=android&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
-:::
+</div>
 
 ------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@ Released under the [MIT License](LICENSE).
 
 ------------------------------------------------------------------------
 
-::: {align="center"}
+<div align="center">
 **Build AR experiences like application features --- not XR
 infrastructure.**
-:::
+</div>
